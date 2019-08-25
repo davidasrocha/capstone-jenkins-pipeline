@@ -15,4 +15,4 @@ Then, you are going to [configure stacks](./cloudformation/README.md) and [provi
 
 ### How to run and configure Jenkins with Ansible
 
-Then, you need to install some Jenkins Plugins (Blue Ocean and Pipeline AWS), and configure AWS credentials for it.
+Finally, you need to install some Jenkins Plugins (Blue Ocean and Pipeline AWS), and configure AWS credentials for it.
