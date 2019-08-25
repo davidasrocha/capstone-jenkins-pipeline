@@ -1,3 +1,4 @@
 cloudformation/parameters/*.json
 initialAdminPassword
 *.retry
+*.pem
