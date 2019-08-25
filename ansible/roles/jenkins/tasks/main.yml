@@ -1,12 +1,4 @@
 ---
-- name: installing JDK
-  apt:
-    package: default-jdk
-    state: present
-    update_cache: yes
-    autoclean: yes
-    force: yes
-
 - name: downloading Jenkins Key
   apt_key: 
     url: https://pkg.jenkins.io/debian/jenkins.io.key
@@ -25,8 +17,14 @@
     autoclean: yes
     force: yes
 
+- name: checking there is initialAdminPassword file
+  stat:
+    path: /var/lib/jenkins/secrets/initialAdminPassword
+  register: initialAdminPassword
+
 - name: copying initial admin password from server
   fetch:
     src: /var/lib/jenkins/secrets/initialAdminPassword
     dest: roles/jenkins/files/
     flat: yes
+  when: initialAdminPassword.stat.exists == True

@@ -1,0 +1,8 @@
+---
+- name: installing Packages
+  apt:
+    package: ["default-jdk", "tidy"]
+    state: present
+    update_cache: yes
+    autoclean: yes
+    force: yes
