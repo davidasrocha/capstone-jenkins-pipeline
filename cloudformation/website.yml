@@ -3,7 +3,7 @@ Resources:
   WebSiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: "udacityproject5website"
+      BucketName: "udacityproject4website"
       WebsiteConfiguration:
         IndexDocument: "index.html"
         ErrorDocument: "index.html"
