@@ -1,0 +1,71 @@
+Parameters:
+
+  VpcCidrBlock:
+    Type: String
+
+  SubnetCidrBlock:
+    Type: String
+
+Resources:
+
+  JenkinsVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Sub "${VpcCidrBlock}"
+      EnableDnsHostnames: True
+
+# Subnets
+
+  JenkinsPublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: !Sub "${SubnetCidrBlock}"
+      VpcId: !Ref JenkinsVPC
+      MapPublicIpOnLaunch: True
+      AvailabilityZone: !Select [ 0, !GetAZs '' ]
+
+# Gateways
+
+  JenkinsInternetGateway:
+    Type: AWS::EC2::InternetGateway
+
+  AttachInternetGatewayVPC:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref JenkinsInternetGateway
+      VpcId: !Ref JenkinsVPC
+
+# Routers
+
+  RouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref JenkinsVPC
+
+  PublicRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref RouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref JenkinsInternetGateway
+    DependsOn: AttachInternetGatewayVPC
+
+  JenkinsPublicSubnetAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref RouteTable
+      SubnetId: !Ref JenkinsPublicSubnet
+
+Outputs:
+
+  JenkinsVPC:
+    Description: Jenkins CI/CD VPC
+    Value: !Ref JenkinsVPC
+    Export:
+      Name: !Sub "${AWS::StackName}-VPCId"
+
+  JenkinsPublicSubnet:
+    Description: Jenkins CD/CD Public Subnet
+    Value: !Ref JenkinsPublicSubnet
+    Export:
+      Name: !Sub "${AWS::StackName}-PublicSubnetID"
