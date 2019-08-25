@@ -1,0 +1,18 @@
+[
+  {
+    "ParameterKey": "JenkinsVPC",
+    "ParameterValue": "cicd-jenkins-network-VPCId"
+  },
+  {
+    "ParameterKey": "JenkinsPublicSubnet",
+    "ParameterValue": "cicd-jenkins-network-PublicSubnetID"
+  },
+  {
+    "ParameterKey": "MyIPAddress",
+    "ParameterValue": "0.0.0.0/0"
+  },
+  {
+    "ParameterKey": "KeyPairName",
+    "ParameterValue": ""
+  }
+]

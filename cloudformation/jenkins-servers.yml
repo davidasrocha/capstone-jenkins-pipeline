@@ -1,0 +1,132 @@
+Parameters:
+
+  JenkinsVPC:
+    Type: String
+
+  JenkinsPublicSubnet:
+    Type: String
+
+  MyIPAddress:
+    Type: String
+
+  KeyPairName:
+    Type: String
+
+Resources:
+
+# IAM
+
+  JenkinsGroup:
+    Type: AWS::IAM::Group
+    Properties:
+      GroupName: "jenkins"
+      ManagedPolicyArns: [ "arn:aws:iam::aws:policy/AmazonEC2FullAccess", "arn:aws:iam::aws:policy/AmazonS3FullAccess", "arn:aws:iam::aws:policy/AmazonVPCFullAccess" ]
+
+  JenkinsUser:
+    Type: AWS::IAM::User
+    Properties:
+      UserName: "jenkins"
+      Groups: [ !Ref JenkinsGroup ]
+      ManagedPolicyArns: [ "arn:aws:iam::aws:policy/AdministratorAccess" ]
+      LoginProfile:
+        Password: "#udacity123"
+        PasswordResetRequired: True
+    DependsOn: JenkinsGroup
+
+  JenkinsAccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      Status: Active
+      UserName: !Ref JenkinsUser
+    DependsOn: JenkinsGroup
+
+# Security Group
+
+  DefaultSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Default Security Group
+      SecurityGroupEgress:
+        - IpProtocol: "tcp"
+          FromPort: 0
+          ToPort: 65355
+          CidrIp: "0.0.0.0/0"
+      VpcId: 
+        Fn::ImportValue: !Sub "${JenkinsVPC}"
+
+  JenkinsSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Jenkins Security Group
+      SecurityGroupIngress:
+        - IpProtocol: "tcp"
+          FromPort: 8080
+          ToPort: 8080
+          CidrIp: "0.0.0.0/0"
+      VpcId: 
+        Fn::ImportValue: !Sub "${JenkinsVPC}"
+
+  SSHSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: SSH Security Group
+      SecurityGroupIngress:
+        - IpProtocol: "tcp"
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Sub "${MyIPAddress}"
+      VpcId: 
+        Fn::ImportValue: !Sub "${JenkinsVPC}"
+
+# Servers
+
+  JenkinsEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      SecurityGroupIds: 
+        - Fn::GetAtt: DefaultSecurityGroup.GroupId
+        - Fn::GetAtt: JenkinsSecurityGroup.GroupId
+        - Fn::GetAtt: SSHSecurityGroup.GroupId
+      ImageId: "ami-005bdb005fb00e791"
+      InstanceType: "t2.micro"
+      SubnetId:
+        Fn::ImportValue: !Sub "${JenkinsPublicSubnet}"
+      BlockDeviceMappings:
+        - DeviceName: "/dev/sdk"
+          Ebs:
+            VolumeSize: '10'
+      KeyName: !Sub "${KeyPairName}"
+
+Outputs:
+
+  JenkinsURL:
+    Description: Jenkins public address
+    Value: !Sub
+      - ${Protocol}://${IP}:${Port}
+      - { Protocol: "http", IP: !GetAtt JenkinsEC2Instance.PublicDnsName, Port: "8080" }
+    Export:
+      Name: !Sub "${AWS::StackName}-JenkinsURL"
+
+  JenkinsIp:
+    Description: Jenkins ip address
+    Value: !GetAtt JenkinsEC2Instance.PublicIp
+    Export:
+      Name: !Sub "${AWS::StackName}-JenkinsIp"
+
+  UserAccessKey:
+    Description: User access key
+    Value: !Ref JenkinsAccessKey
+    Export:
+      Name: !Sub "${AWS::StackName}-AccessKey"
+
+  UserSecretKey:
+    Description: User secret key
+    Value: !GetAtt JenkinsAccessKey.SecretAccessKey
+    Export:
+      Name: !Sub "${AWS::StackName}-SecretKey"
+
+  UserId:
+    Description: User id
+    Value: !Ref JenkinsUser
+    Export:
+      Name: !Sub "${AWS::StackName}-UserId"
