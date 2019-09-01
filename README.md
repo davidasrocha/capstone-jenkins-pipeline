@@ -13,6 +13,18 @@ Second, you need to have a KeyPair for your Jenkins EC2 instance, and configured
 
 Then, you are going to [configure stacks](./cloudformation/README.md) and [provisioner Jenkins server](./ansible/README.md).
 
-### How to run and configure Jenkins with Ansible
+### Configure Jenkins Pipeline
 
 Finally, you need to install some Jenkins Plugins (Blue Ocean and Pipeline AWS), and configure AWS credentials for it.
+
+### How to do partial setup
+
+You can do a partial setup including CloudFormation Stacks and Jenkins install and follow the Jenkins Wizard Configuration.
+
+First, you need to run this command:
+
+```
+./jenkins-setup.sh STACK_NAME VPC_CIDR_BLOCK SUBNET_CIDR_BLOCK YOUR_IP_ADDRESS KEYPAIR_NAME
+```
+
+After this command running you can get **Jenkins URL** in console to access **Jenkins Wizard** in Web Browser.
