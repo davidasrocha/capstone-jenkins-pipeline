@@ -6,3 +6,21 @@
     update_cache: yes
     autoclean: yes
     force: yes
+
+- name: verifying if there is eksctl
+  stat:
+    path: /usr/local/bin/eksctl
+  register: eksctl_cli
+
+- name: installing eksctl
+  get_url:
+    url: "https://github.com/weaveworks/eksctl/releases/download/latest_release/eksctl_{{ ansible_system }}_amd64.tar.gz"
+    dest: /tmp/eksctl.tar.gz
+  when: eksctl_cli.stat.exists == false
+
+- name: unarchive eksctl
+  unarchive:
+    src: /tmp/eksctl.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+  when: eksctl_cli.stat.exists == false
