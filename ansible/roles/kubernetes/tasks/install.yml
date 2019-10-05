@@ -1,0 +1,7 @@
+---
+- name: installing kubernetes packages
+  apt:
+    package: ["kubectl"]
+    update_cache: yes
+    autoclean: yes
+    force: yes

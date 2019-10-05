@@ -1,0 +1,9 @@
+---
+- name:
+  import_tasks: roles/kubernetes/tasks/repositories.yml
+
+- name:
+  import_tasks: roles/kubernetes/tasks/packages.yml
+
+- name:
+  import_tasks: roles/kubernetes/tasks/install.yml

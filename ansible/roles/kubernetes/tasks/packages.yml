@@ -1,0 +1,8 @@
+---
+- name: installing required packages
+  apt:
+    package: ["apt-transport-https", "curl"]
+    state: present
+    update_cache: yes
+    autoclean: yes
+    force: yes

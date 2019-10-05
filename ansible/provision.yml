@@ -3,4 +3,5 @@
   roles:
     - packages
     - docker
+    - kubernetes
     - jenkins
