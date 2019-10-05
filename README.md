@@ -1,9 +1,8 @@
 # About the project
 
-This is the fourth project of the Udacity Nanodegree Program "Cloud Dev Ops Engineer".
-The objective was to do Jenkins Setup and deploy a static web site to AWS S3.
+This project is part of the Udacity Nanodegree Program "Cloud DevOps Engineer". The objective is going to deploy an API using blue-green strategy directly on Kubernetes.
 
-You can take a look in the infrastructure diagram [here](https://raw.githubusercontent.com/davidasrocha/aws-jenkins-pipeline/master/cloud-infrastructure-diagrams/aws-jenkins-pipeline.jpeg).
+You can take a look in the infrastructure diagram [here](https://raw.githubusercontent.com/davidasrocha/capstone-jenkins-pipeline/master/cloud-infrastructure-diagrams/aws-jenkins-pipeline.jpeg).
 
 ### How to run and configure project
 
