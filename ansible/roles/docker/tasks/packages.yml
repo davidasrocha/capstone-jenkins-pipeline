@@ -1,0 +1,16 @@
+---
+- name: removing older versions
+  apt:
+    package: ["docker", "docker-engine", "docker.io", "containerd", "runc"]
+    state: absent
+    update_cache: yes
+    autoclean: yes
+    force: yes
+
+- name: installing require packages
+  apt:
+    package: ["apt-transport-https", "ca-certificates", "curl", "gnupg-agent", "software-properties-common"]
+    state: present
+    update_cache: yes
+    autoclean: yes
+    force: yes

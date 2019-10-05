@@ -1,0 +1,24 @@
+---
+- name: installing docker engine
+  apt:
+    name: ['docker-ce', 'docker-ce-cli', 'containerd.io']
+    state: present
+    update_cache: yes
+    autoclean: yes
+    force: yes
+
+- name: creating daemon.json
+  copy:
+    src: roles/docker/files/daemon.json
+    dest: /etc/docker/daemon.json
+
+- name: configuring to controll docker using systemd
+  file:
+    path: /etc/systemd/system/docker.service.d
+    state: directory
+
+- name: configuring docker service
+  systemd:
+    name: docker
+    daemon_reload: yes
+    state: restarted

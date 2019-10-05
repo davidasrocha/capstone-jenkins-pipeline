@@ -1,0 +1,9 @@
+---
+- name:
+  import_tasks: roles/docker/tasks/repositories.yml
+
+- name:
+  import_tasks: roles/docker/tasks/packages.yml
+
+- name:
+  import_tasks: roles/docker/tasks/install.yml
