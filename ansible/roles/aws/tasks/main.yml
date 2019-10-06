@@ -1,3 +1,6 @@
 ---
 - name:
-  import_tasks: roles/aws/tasks/packages.yml
+  import_tasks: roles/aws/tasks/cli.yml
+
+- name:
+  import_tasks: roles/aws/tasks/eksctl.yml

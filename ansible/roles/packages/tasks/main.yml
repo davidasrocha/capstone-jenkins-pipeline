@@ -6,6 +6,3 @@
     update_cache: yes
     autoclean: yes
     force: yes
-
-- name:
-  import_tasks: roles/packages/tasks/eksctl.yml
