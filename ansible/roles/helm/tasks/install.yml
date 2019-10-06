@@ -1,0 +1,6 @@
+---
+- name: installing helm
+  snap:
+    name: helm
+    classic: yes
+    state: present

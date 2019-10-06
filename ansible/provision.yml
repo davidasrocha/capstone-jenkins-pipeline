@@ -4,5 +4,6 @@
     - packages
     - docker
     - kubernetes
+    - helm
     - aws
     - jenkins
