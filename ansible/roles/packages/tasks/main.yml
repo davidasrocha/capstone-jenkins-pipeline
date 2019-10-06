@@ -6,3 +6,11 @@
     update_cache: yes
     autoclean: yes
     force: yes
+
+- name: update Packages
+  apt:
+    package: ["git"]
+    state: latest
+    update_cache: yes
+    autoclean: yes
+    force: yes
