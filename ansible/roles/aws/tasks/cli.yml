@@ -12,3 +12,9 @@
     name: aws-cli
     classic: yes
     state: present
+
+- name: including /snap/bin to PATH environment variable
+  lineinfile:
+    path: /root/.bashrc
+    line: 'PATH="$PATH:/snap/bin"'
+    create: yes
