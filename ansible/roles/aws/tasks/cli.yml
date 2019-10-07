@@ -8,10 +8,7 @@
     force: yes
 
 - name: installing aws cli
-  snap:
-    name: aws-cli
-    classic: yes
-    state: present
+  command: "pip3 install awscli --upgrade"
 
 - name: including /snap/bin to PATH environment variable
   lineinfile:
