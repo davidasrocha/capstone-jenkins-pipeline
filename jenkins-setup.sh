@@ -37,6 +37,7 @@ fi
 
 NETWORK_STACK_NAME="$1-network"
 SERVERS_STACK_NAME="$1-servers"
+STORAGE_STACK_NAME="$1-storage"
 
 VPC_CIDR_BLOCK="$2"
 SUBNET_CIDR_BLOCK="$3"
@@ -94,6 +95,27 @@ echo ""
 
 aws cloudformation wait stack-create-complete \
     --stack-name $SERVERS_STACK_NAME
+
+echo "Creating storage stack"
+
+STORAGE_STACK_ID=$(aws cloudformation create-stack \
+    --stack-name "$STORAGE_STACK_NAME" \
+    --template-body "file://$PWD/cloudformation/jenkins-storage.yml" \
+    --region=us-west-2 \
+    --query "StackId" \
+    --output text)
+
+if [ -z $STORAGE_STACK_ID ] || [ $STORAGE_STACK_ID = "" ]
+then
+    echo ""
+    echo "ERROR: $STORAGE_STACK_NAME wasn't created"
+    echo ""
+    exit 1
+fi
+
+echo ""
+echo "Waiting storage stack creation"
+echo ""
 
 echo "Jenkins stacks finished"
 echo ""

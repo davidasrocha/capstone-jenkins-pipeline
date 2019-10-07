@@ -88,7 +88,7 @@ Resources:
         - Fn::GetAtt: JenkinsSecurityGroup.GroupId
         - Fn::GetAtt: SSHSecurityGroup.GroupId
       ImageId: "ami-005bdb005fb00e791"
-      InstanceType: "t2.micro"
+      InstanceType: "t2.medium"
       SubnetId:
         Fn::ImportValue: !Sub "${JenkinsPublicSubnet}"
       BlockDeviceMappings:

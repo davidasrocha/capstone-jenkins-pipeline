@@ -1,0 +1,36 @@
+Resources:
+
+  EksConfigsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${AWS::StackName}-eks-configs"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+
+  EksConfigsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref EksConfigsBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal: "*"
+            Action:
+              - "s3:GetObject"
+              - "s3:PutObject"
+            Resource: !Sub
+              - "${ARN}/*"
+              - { ARN: !GetAtt EksConfigsBucket.Arn }
+    DependsOn: EksConfigsBucket
+
+Outputs:
+
+  EksConfigsBucketName:
+    Description: Bucket name to store EKS configuration files
+    Value: !Ref EksConfigsBucket
+    Export:
+      Name: !Sub "${AWS::StackName}-EksConfigsBucketName"
