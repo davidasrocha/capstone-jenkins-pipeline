@@ -3,7 +3,9 @@
   roles:
     - packages
     - docker
+    - docker-compose
     - kubernetes
     - helm
     - aws
     - jenkins
+    - account

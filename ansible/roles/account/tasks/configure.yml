@@ -1,0 +1,8 @@
+---
+- name: configuring jenkins and docker
+  user:
+    name: jenkins
+    groups: ['docker']
+  notify:
+    - configuring docker service
+    - configuring jenkins service

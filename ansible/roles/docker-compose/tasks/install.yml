@@ -1,0 +1,16 @@
+---
+- name: verifying if there is docker-compose
+  stat:
+    path: /usr/local/bin/docker-compose
+  register: docker_compose
+
+- name: dowloading docker-compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+    dest: /usr/local/bin/docker-compose
+  when: docker_compose.stat.exists == false
+
+- name: setting modes to docker-compose
+  file:
+    path: /usr/local/bin/docker-compose
+    mode: "+x"

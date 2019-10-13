@@ -28,3 +28,9 @@
     dest: roles/jenkins/files/
     flat: yes
   when: initialAdminPassword.stat.exists == True
+
+- name: configuring jenkins service
+  systemd:
+    name: jenkins
+    daemon_reload: yes
+    state: restarted

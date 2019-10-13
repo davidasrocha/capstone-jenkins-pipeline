@@ -1,0 +1,3 @@
+---
+- name:
+  import_tasks: roles/docker-compose/tasks/install.yml

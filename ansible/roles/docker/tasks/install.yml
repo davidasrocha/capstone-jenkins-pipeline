@@ -17,6 +17,17 @@
     path: /etc/systemd/system/docker.service.d
     state: directory
 
+- name: creating /usr/lib/systemd/system
+  file:
+    path: /usr/lib/systemd/system
+    state: directory
+    mode: "u=rwx,g=rx,o=rx"
+
+- name: setting file docker.service
+  copy:
+    src: roles/docker/files/docker.service
+    dest: /usr/lib/systemd/system/docker.service
+
 - name: configuring docker service
   systemd:
     name: docker
