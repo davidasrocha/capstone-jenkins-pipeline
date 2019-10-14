@@ -1,7 +1,7 @@
 ---
 - name: installing Packages
   apt:
-    package: ["default-jdk", "tidy"]
+    package: ["default-jdk", "tidy", "jq"]
     state: present
     update_cache: yes
     autoclean: yes
