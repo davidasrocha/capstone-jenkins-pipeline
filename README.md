@@ -2,7 +2,9 @@
 
 This project is part of the Udacity Nanodegree Program "Cloud DevOps Engineer". The objective is going to deploy an API using blue-green strategy directly on Kubernetes.
 
-You can take a look in the infrastructure diagram [here](https://raw.githubusercontent.com/davidasrocha/capstone-jenkins-pipeline/master/cloud-infrastructure-diagrams/aws-jenkins-pipeline.jpeg).
+This repository contains all code required to deploy stacks and provision Jenkins, which will help you to execute CI/CD of the [Capstone API](https://github.com/davidasrocha/capstone-api-grandmother-recipes), [Kubernetes Cluster](https://github.com/davidasrocha/capstone-kubernetes-setup) and to deploy this API over the Kubernetes.
+
+![alt capstone jenkins infrastructure](./cloud-infrastructure-diagrams/aws-capstone-jenkins.png)
 
 ### How to run and configure project
 
@@ -14,11 +16,11 @@ Then, you are going to [configure stacks](./cloudformation/README.md) and [provi
 
 ### Configure Jenkins Pipeline
 
-Finally, you need to install some Jenkins Plugins (Blue Ocean and Pipeline AWS), and configure AWS credentials for it.
+Finally, you need to install some Jenkins Plugins ([Blue Ocean](https://jenkins.io/projects/blueocean/) and [AWS Pipeline](https://github.com/jenkinsci/pipeline-aws-plugin)), and configure AWS credentials for it.
 
-### How to do partial setup
+### How to setup Jenkins
 
-You can do a partial setup including CloudFormation Stacks and Jenkins install and follow the Jenkins Wizard Configuration.
+You can do a setup including CloudFormation Stacks and Jenkins install and follow the Jenkins Wizard Configuration.
 
 First, you need to run this command:
 

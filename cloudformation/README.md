@@ -5,17 +5,15 @@ First, you need set parameters to CloudFormation stack:
 * Copy file `./parameters/jenkins-network.json.dist` to `./parameters/jenkins-network.json`, and edit parameters.
 * Copy file `./parameters/jenkins-servers.json.dist` to `./parameters/jenkins-servers.json`, and edit parameters.
 
-Now, you can run this command to create stacks to Jenkins network and server:
+Now, you can run this command to create stacks to Jenkins network, server and S3 Bucket:
 
 ```
 ./jenkins-stack-create.sh YOUR_STACK_NAME
 ```
 
-Run this command to create S3 Bucket to web site:
+After executing the previous command, you will find in your AWS Console CloudFormation Stacks a similar image:
 
-```
-./website-stack-create.sh YOUR_STACK_NAME
-```
+![alt cloudformation](./docs/images/aws-cloud-formation-stacks.png)
 
 If there are already stacks, you can run this command to update these stacks:
 
